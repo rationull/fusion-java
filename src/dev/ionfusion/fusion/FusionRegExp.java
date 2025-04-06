@@ -1,7 +1,7 @@
 // Copyright Ion Fusion contributors. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-package com.amazon.fusion;
+package dev.ionfusion.fusion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,20 +9,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import static com.amazon.fusion.FusionBool.makeBool;
-import static com.amazon.fusion.FusionList.immutableList;
-import static com.amazon.fusion.FusionList.nullList;
-import static com.amazon.fusion.FusionNumber.checkRequiredIntArg;
-import static com.amazon.fusion.FusionNumber.makeInt;
-import static com.amazon.fusion.FusionProcedure.isProcedure;
-import static com.amazon.fusion.FusionSexp.emptySexp;
-import static com.amazon.fusion.FusionSexp.immutableSexp;
-import static com.amazon.fusion.FusionSexp.nullSexp;
-import static com.amazon.fusion.FusionSexp.pair;
-import static com.amazon.fusion.FusionString.checkRequiredStringArg;
-import static com.amazon.fusion.FusionString.isString;
-import static com.amazon.fusion.FusionString.makeString;
-import static com.amazon.fusion.FusionString.unsafeStringToJavaString;
+import static dev.ionfusion.fusion.FusionBool.makeBool;
+import static dev.ionfusion.fusion.FusionList.immutableList;
+import static dev.ionfusion.fusion.FusionList.nullList;
+import static dev.ionfusion.fusion.FusionNumber.checkRequiredIntArg;
+import static dev.ionfusion.fusion.FusionNumber.makeInt;
+import static dev.ionfusion.fusion.FusionProcedure.isProcedure;
+import static dev.ionfusion.fusion.FusionSexp.emptySexp;
+import static dev.ionfusion.fusion.FusionSexp.immutableSexp;
+import static dev.ionfusion.fusion.FusionSexp.nullSexp;
+import static dev.ionfusion.fusion.FusionSexp.pair;
+import static dev.ionfusion.fusion.FusionString.checkRequiredStringArg;
+import static dev.ionfusion.fusion.FusionString.isString;
+import static dev.ionfusion.fusion.FusionString.makeString;
+import static dev.ionfusion.fusion.FusionString.unsafeStringToJavaString;
 
 /**
  * Utilities for manipulating Fusion {@code string} values with

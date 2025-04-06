@@ -206,7 +206,7 @@ disable, or with a non-capturing group which contains an expression:
     (jregexp "(?i)foo")  // matches "foo", "xFOOy", etc.
     (jregexp "(?i:foo)") // same as above
     '''
-    "com.amazon.fusion.FusionRegExp$RegExpProc")
+    "dev.ionfusion.fusion.FusionRegExp$RegExpProc")
 
   (defpub_j is_regexp
     '''
@@ -214,7 +214,7 @@ disable, or with a non-capturing group which contains an expression:
 
 Determines whether a `value` is a regexp, returning `true` or `false`.
     '''
-    "com.amazon.fusion.FusionRegExp$IsRegExpProc")
+    "dev.ionfusion.fusion.FusionRegExp$IsRegExpProc")
 
   (defpub_j jregexp_quote
     '''
@@ -227,7 +227,7 @@ within a regular expression.
     (jregexp_quote "foo")     ==> "foo"
     (jregexp_quote "([\\n])") ==> "\\(\\[\\\\n\\]\\)\"
     '''
-    "com.amazon.fusion.FusionRegExp$QuoteProc")
+    "dev.ionfusion.fusion.FusionRegExp$QuoteProc")
 
   (defpub_j regexp_to_string
     '''
@@ -238,7 +238,7 @@ Takes a regexp and returns its string equivalent pattern.
     (regexp_to_string (jregexp "foo\"))     ==> "foo"
     (regexp_to_string (jregexp "([\\n])")) ==> "([\\n])"
     '''
-    "com.amazon.fusion.FusionRegExp$ToStringProc")
+    "dev.ionfusion.fusion.FusionRegExp$ToStringProc")
 
   //
   // Regexp Matching
@@ -251,7 +251,7 @@ Takes a regexp and returns its string equivalent pattern.
 Attempts to match the regexp against a string returning string match for each
 match group or a `null.list` if no matches were found.
     '''
-    "com.amazon.fusion.FusionRegExp$MatchProc")
+    "dev.ionfusion.fusion.FusionRegExp$MatchProc")
 
   (defpub_j regexp_match_g
     '''
@@ -262,7 +262,7 @@ matches `regexp` matches in `str`, returning a sequence of sequences of match
 groups or a `null.sexp` if no matches were found. If `start_pos` and `end_pos`
 are specified, only the characters between those positions will be considered.
     '''
-    "com.amazon.fusion.FusionRegExp$MatchGlobalProc")
+    "dev.ionfusion.fusion.FusionRegExp$MatchGlobalProc")
 
   (defpub_j regexp_match_positions
     '''
@@ -274,7 +274,7 @@ The end position returned is exclusive. If `start_pos` and `end_pos` are
 specified, only the characters (code points) between those positions will be
 considered.
     '''
-    "com.amazon.fusion.FusionRegExp$MatchPositionsProc")
+    "dev.ionfusion.fusion.FusionRegExp$MatchPositionsProc")
 
   (defpub_j regexp_match_positions_g
     '''
@@ -286,7 +286,7 @@ sequences of pairs of start and end positions for each match group. The end
 position is exclusive. If `start_pos` and `end_pos` are specified, only the
 characters between those positions will be considered.
     '''
-    "com.amazon.fusion.FusionRegExp$MatchPositionsGlobalProc")
+    "dev.ionfusion.fusion.FusionRegExp$MatchPositionsGlobalProc")
 
   (defpub_j regexp_matches
     '''
@@ -295,7 +295,7 @@ characters between those positions will be considered.
 Like [`regexp_match`](./fusioncontrib/regexp.html#regexp_match), except it
 returns `true` if a match is found or `false` otherwise.
     '''
-    "com.amazon.fusion.FusionRegExp$IsMatchProc")
+    "dev.ionfusion.fusion.FusionRegExp$IsMatchProc")
 
   (defpub_j regexp_matches_exact
     '''
@@ -304,7 +304,7 @@ returns `true` if a match is found or `false` otherwise.
 Like [`regexp_is_match`](./fusioncontrib/regexp.html#regexp_is_match), except it
 only returns `true` if `str` matches in its entirety. Returns`false` otherwise.
     '''
-    "com.amazon.fusion.FusionRegExp$IsMatchExactProc")
+    "dev.ionfusion.fusion.FusionRegExp$IsMatchExactProc")
 
   //
   // Regexp Splitting
@@ -316,7 +316,7 @@ only returns `true` if `str` matches in its entirety. Returns`false` otherwise.
 
 Splits `str` based on the supplied regexp.
     '''
-    "com.amazon.fusion.FusionRegExp$SplitProc")
+    "dev.ionfusion.fusion.FusionRegExp$SplitProc")
 
   //
   // Regexp Substitution
@@ -331,7 +331,7 @@ occurance with `insert`. `insert` may either be a string or a `procedure`.
 If `insert` is a procedure, all match groups will be passed as arguments, and
 the result of the expression will be used as the replacement `string`.
     '''
-    "com.amazon.fusion.FusionRegExp$ReplaceProc")
+    "dev.ionfusion.fusion.FusionRegExp$ReplaceProc")
 
   (defpub_j regexp_replace_g
     '''
@@ -340,7 +340,7 @@ the result of the expression will be used as the replacement `string`.
 Like [`regexp_replace`](regexp_replace], but replaces all of the matching
 occurances with `insert`.
     '''
-    "com.amazon.fusion.FusionRegExp$ReplaceGlobalProc")
+    "dev.ionfusion.fusion.FusionRegExp$ReplaceGlobalProc")
 
   (define __unsafe_rest
     '''
@@ -402,5 +402,5 @@ pair.
 Returns a `string` which can be safely used as a replacement in
 [`regexp_replace`](./fusioncontrib/regexp.html#regexp_replace) without any replacements.
     '''
-    "com.amazon.fusion.FusionRegExp$ReplaceQuoteProc")
+    "dev.ionfusion.fusion.FusionRegExp$ReplaceQuoteProc")
 )
