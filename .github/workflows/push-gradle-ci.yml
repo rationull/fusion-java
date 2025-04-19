@@ -50,6 +50,9 @@ jobs:
 
         # Delete the existing release if it exists.
         EXISTING_RELEASE=$(gh release list --repo ${{ github.repository }} --json tagName --jq ".[] | select(.tagName==\"$RELEASE_TAG\")")
+
+        echo "EXISTING_RELEASE: \"$EXISTING_RELEASE\""
+
         if [ -z "$EXISTING_RELEASE" ]; then
           echo "DELETING RELEASE"
           gh release delete --repo ${{ github.repository }} \
