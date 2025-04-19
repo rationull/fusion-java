@@ -47,21 +47,27 @@ jobs:
         RELEASE_TAG="latest"
         RELEASE_NAME="Latest build"
 
-        # Create the release if it doesn't exist.
+        # Delete the existing release if it exists.
         EXISTING_RELEASE=$(gh release list --repo ${{ github.repository }} --json tagName --jq ".[] | select(.tagName==\"$RELEASE_TAG\")")
         if [ -z "$EXISTING_RELEASE" ]; then
-          gh release create --repo ${{ github.repository }} \
-            "$RELEASE_TAG" \
-            --title "$RELEASE_NAME" \
-            --notes "Latest build" \
-            --prerelease
+          gh release delete --repo ${{ github.repository }} "$RELEASE_TAG" --yes
         fi
 
-        # Upload the distribution files (this will include a zip and a tarball).
-        gh release upload --repo ${{ github.repository }} \
+        # Create the release and upload the distribution files (this will include a zip and a tarball).
+        gh release create --repo ${{ github.repository }} \
           "$RELEASE_TAG" \
-          --clobber \
+          --force \
+          --title "$RELEASE_NAME" \
+          --notes "Latest build" \
+          --latest \
+          --prerelease \
           build/distributions/*
+
+        # Upload the distribution files (this will include a zip and a tarball).
+        # gh release upload --repo ${{ github.repository }} \
+        #   "$RELEASE_TAG" \
+        #   --clobber \
+        #   build/distributions/*
 
   # upload-release:
   #   needs: build
