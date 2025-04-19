@@ -47,26 +47,26 @@ jobs:
 
     steps:
     - name: Upload latest release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # Define release tag and name.
         RELEASE_TAG="latest"
         RELEASE_NAME="Latest build"
 
-        # Check if the release already exists.
-        RELEASE_ID=$(gh api repos/${{ github.repository }}/releases --jq ".[] | select(.tag_name==\"$RELEASE_TAG\") | .id")
-
-        if [ -z "$RELEASE_ID" ]; then
-          # Create a new release if it doesn't exist.
-          RELEASE_ID=$(gh api repos/${{ github.repository }}/releases -X POST -f tag_name="$RELEASE_TAG" -f name="$RELEASE_NAME" | jq -r .id)
+        # Create the release if it doesn't exist.
+        EXISTING_RELEASE=$(gh release list --repo ${{ github.repository }} --json tagName --jq ".[] | select(.tagName==\"$RELEASE_TAG\")"
+        if [ -z "$EXISTING_RELEASE" ]; then
+          gh release create --repo ${{ github.repository }} \
+            "$RELEASE_TAG" \
+            --title "$RELEASE_NAME" \
+            --notes "Latest build" \
+            --draft \
+            --prerelease
         fi
 
         # Upload the distribution files (this will include a zip and a tarball).
-        gh release upload "$RELEASE_ID" \
+        gh release upload --repo ${{ github.repository }} \
+          "$RELEASE_ID" \
           --clobber \
-          --title "$RELEASE_NAME" \
-          --notes "Latest build" \
           build/distributions/*
 
   # dependency-submission:
