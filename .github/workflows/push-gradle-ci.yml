@@ -45,7 +45,8 @@ jobs:
       run: |
         # Define release tag and name.
         RELEASE_TAG="latest"
-        RELEASE_NAME="Latest build"
+        RELEASE_TITLE="Latest build"
+        CURRENT_BRANCH=$(git branch --show-current)
 
         # Delete the existing release if it exists.
         EXISTING_RELEASE=$(gh release list --repo ${{ github.repository }} --json tagName --jq ".[] | select(.tagName==\"$RELEASE_TAG\")")
@@ -59,10 +60,10 @@ jobs:
         # Create the release and upload the distribution files (this will include a zip and a tarball).
         gh release create --repo ${{ github.repository }} \
           "$RELEASE_TAG" \
-          --title "$RELEASE_NAME" \
+          --title "$RELEASE_TITLE" \
           --notes "Latest build" \
-          --latest \
           --prerelease \
+          --target "$CURRENT_BRANCH" \
           build/distributions/*
 
         # Upload the distribution files (this will include a zip and a tarball).
