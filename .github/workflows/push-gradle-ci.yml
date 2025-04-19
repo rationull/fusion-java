@@ -50,13 +50,15 @@ jobs:
         # Delete the existing release if it exists.
         EXISTING_RELEASE=$(gh release list --repo ${{ github.repository }} --json tagName --jq ".[] | select(.tagName==\"$RELEASE_TAG\")")
         if [ -z "$EXISTING_RELEASE" ]; then
-          gh release delete --repo ${{ github.repository }} "$RELEASE_TAG" --yes
+          gh release delete --repo ${{ github.repository }} \
+            "$RELEASE_TAG" \
+            --yes \
+            --cleanup-tag
         fi
 
         # Create the release and upload the distribution files (this will include a zip and a tarball).
         gh release create --repo ${{ github.repository }} \
           "$RELEASE_TAG" \
-          --force \
           --title "$RELEASE_NAME" \
           --notes "Latest build" \
           --latest \
