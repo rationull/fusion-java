@@ -53,7 +53,7 @@ jobs:
         RELEASE_NAME="Latest build"
 
         # Create the release if it doesn't exist.
-        EXISTING_RELEASE=$(gh release list --repo ${{ github.repository }} --json tagName --jq ".[] | select(.tagName==\"$RELEASE_TAG\")"
+        EXISTING_RELEASE=$(gh release list --repo ${{ github.repository }} --json tagName --jq ".[] | select(.tagName==\"$RELEASE_TAG\")")
         if [ -z "$EXISTING_RELEASE" ]; then
           gh release create --repo ${{ github.repository }} \
             "$RELEASE_TAG" \
@@ -65,7 +65,7 @@ jobs:
 
         # Upload the distribution files (this will include a zip and a tarball).
         gh release upload --repo ${{ github.repository }} \
-          "$RELEASE_ID" \
+          "$RELEASE_TAG" \
           --clobber \
           build/distributions/*
 
