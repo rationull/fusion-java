@@ -53,7 +53,7 @@ jobs:
 
         echo "EXISTING_RELEASE: \"$EXISTING_RELEASE\""
 
-        if [ -z "$EXISTING_RELEASE" ]; then
+        if [ -n "$EXISTING_RELEASE" ]; then
           echo "DELETING RELEASE"
           gh release delete --repo ${{ github.repository }} \
             "$RELEASE_TAG" \
