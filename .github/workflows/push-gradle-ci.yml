@@ -47,6 +47,8 @@ jobs:
 
     steps:
     - name: Upload latest release
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         # Define release tag and name.
         RELEASE_TAG="latest"
