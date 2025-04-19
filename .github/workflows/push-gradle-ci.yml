@@ -11,7 +11,7 @@ name: Java CI with Gradle
 on:
   push:
     branches: 
-      - "main"
+      - "actions-test"
 
 jobs:
   build:
@@ -40,23 +40,23 @@ jobs:
       run: ./gradlew release
 
 
-  dependency-submission:
-    if: github.repository == 'ion-fusion/fusion-java'
+  # dependency-submission:
+  #   if: github.repository == 'ion-fusion/fusion-java'
 
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: write
 
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: 17
-        distribution: corretto
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #   - name: Set up JDK 17
+  #     uses: actions/setup-java@v4
+  #     with:
+  #       java-version: 17
+  #       distribution: corretto
 
-    # Generates and submits a dependency graph, enabling Dependabot Alerts.
-    # https://github.com/gradle/actions/blob/main/dependency-submission
-    # https://github.com/gradle/github-dependency-submission-demo
-    - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@v4
+  #   # Generates and submits a dependency graph, enabling Dependabot Alerts.
+  #   # https://github.com/gradle/actions/blob/main/dependency-submission
+  #   # https://github.com/gradle/github-dependency-submission-demo
+  #   - name: Generate and submit dependency graph
+  #     uses: gradle/actions/dependency-submission@v4
