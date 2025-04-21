@@ -71,7 +71,7 @@ jobs:
           build/distributions/*
 
   dependency-submission:
-    if: github.repository == 'ion-fusion/fusion-java'
+    if: ${{ vars.SUBMIT_DEPENDENCIES == 'true' }}
 
     runs-on: ubuntu-latest
     permissions:
