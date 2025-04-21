@@ -40,7 +40,7 @@ jobs:
       run: ./gradlew release
 
     - name: Upload release
-      if: github.repository == 'ion-fusion/fusion-java'
+      if: ${{ vars.PUBLISH_RELEASE == 'true' }}
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
