@@ -14,7 +14,9 @@ on:
       - "main"
 
 env:
-  LATEST_RELEASE_TAG: "latest"
+  RELEASE_TAG: "snapshot"
+  RELEASE_TITLE: "Latest snapshot build"
+  RELEASE_NOTE: "Snapshot build from the latest commit on main"
 
 jobs:
   build:
@@ -42,34 +44,32 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew release
 
-    - name: Tag latest release
+    - name: Tag snapshot release
       if: ${{ vars.PUBLISH_RELEASE == 'true' }}
       run: |
-        # Update the 'latest' tag to point to the current commit.
-        git tag -f "$LATEST_RELEASE_TAG"
-        git push origin -f "$LATEST_RELEASE_TAG"
+        # Update the release tag to point to the current commit.
+        git tag -f "$RELEASE_TAG"
+        git push origin -f "$RELEASE_TAG"
 
 
-    - name: Upload latest release
+    - name: Upload snapshot release
       if: ${{ vars.PUBLISH_RELEASE == 'true' }}
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        RELEASE_TITLE="Latest build"
-
         # Delete the existing release if it exists.
-        EXISTING_RELEASE=$(gh release list --repo ${{ github.repository }} --json tagName --jq ".[] | select(.tagName==\"$LATEST_RELEASE_TAG\")")
+        EXISTING_RELEASE=$(gh release list --repo ${{ github.repository }} --json tagName --jq ".[] | select(.tagName==\"$RELEASE_TAG\")")
         if [ -n "$EXISTING_RELEASE" ]; then
           gh release delete --repo ${{ github.repository }} \
-            "$LATEST_RELEASE_TAG" \
+            "$RELEASE_TAG" \
             --yes
         fi
 
         # Create the release and upload the distribution files (this will include a zip and a tarball).
         gh release create --repo ${{ github.repository }} \
-          "$LATEST_RELEASE_TAG" \
+          "$RELEASE_TAG" \
           --title "$RELEASE_TITLE" \
-          --notes "Latest build" \
+          --notes "$RELEASE_NOTE" \
           --prerelease \
           --verify-tag \
           build/distributions/*
