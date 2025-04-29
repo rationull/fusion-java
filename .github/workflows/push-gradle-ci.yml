@@ -23,7 +23,7 @@ jobs:
 
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # to create/update tags and upload artifacts
 
     steps:
     # https://github.com/actions/checkout
@@ -41,9 +41,12 @@ jobs:
     # https://github.com/gradle/actions/blob/main/setup-gradle
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
+
+    # Run build
     - name: Build with Gradle Wrapper
       run: ./gradlew release
 
+    # Maintain snapshot tag
     - name: Tag snapshot release
       if: ${{ vars.PUBLISH_RELEASE == 'true' }}
       run: |
@@ -51,9 +54,30 @@ jobs:
         git tag -f "$RELEASE_TAG"
         git push origin -f "$RELEASE_TAG"
 
+    # Upload an artifact release for later jobs to consume
+    - name: Upload distribution
+      uses: actions/upload-artifact@v4
+      with:
+        name: distribution-artifacts
+        path: build/distributions/
+        if-no-files-found: error
+
+  publish-release:
+    if: ${{ vars.PUBLISH_RELEASE == 'true' }}
+    needs: build
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to create a release
+      
+    steps:
+    - name: Download distribution
+      uses: actions/download-artifact@v4
+      with:
+        name: distribution-artifacts
+        path: distributions
 
     - name: Upload snapshot release
-      if: ${{ vars.PUBLISH_RELEASE == 'true' }}
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
@@ -72,7 +96,7 @@ jobs:
           --notes "$RELEASE_NOTE" \
           --prerelease \
           --verify-tag \
-          build/distributions/*
+          distributions/*
 
   dependency-submission:
     if: ${{ vars.SUBMIT_DEPENDENCIES == 'true' }}
